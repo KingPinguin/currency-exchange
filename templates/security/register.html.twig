@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block title %}Registration{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('build/css/security.css') }}">
+{% endblock %}
+{% block body %}
+
+    <div class="container-fluid gray-bg">
+        <div class="wrapper">
+            <div class="middle-box text-center loginscreen">
+                <h3>REGISTRATION</h3>
+
+                {{ form_start(registrationForm) }}
+
+                    <div class="form-group">
+                        {{ form_row(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="form-group">
+
+                        {{ form_errors(registrationForm.password.first) }}
+                        <label>Password</label>
+                        {{ form_widget(registrationForm.password.first, {'attr': {'class': 'form-control'}}) }}
+
+                        <label>Repeat password</label>
+                        {{ form_widget(registrationForm.password.second, {'attr': {'class': 'form-control'}}) }}
+                        
+                    </div>
+                    
+                    <button type="submit" class="btn btn-dark full-width m-b">REGISTER</button>
+
+                {{ form_end(registrationForm) }}
+
+                <a href="{{ path('app_login') }}">LOG IN</a>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
