@@ -57,13 +57,13 @@ class User implements UserInterface
     private $resetRequest;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Quote", mappedBy="user")
      */
-    private $orders;
+    private $quotes;
 
     public function __construct()
     {
-        $this->orders = new ArrayCollection();
+        $this->quotes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -169,30 +169,30 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Order[]
+     * @return Collection|Quote[]
      */
-    public function getOrders(): Collection
+    public function getQuotes(): Collection
     {
-        return $this->orders;
+        return $this->quotes;
     }
 
-    public function addOrder(Order $order): self
+    public function addQuote(Quote $quote): self
     {
-        if (!$this->orders->contains($order)) {
-            $this->orders[] = $order;
-            $order->setUser($this);
+        if (!$this->quotes->contains($quote)) {
+            $this->quotes[] = $quote;
+            $quote->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeOrder(Order $order): self
+    public function removeQuote(Quote $quote): self
     {
-        if ($this->orders->contains($order)) {
-            $this->orders->removeElement($order);
+        if ($this->quotes->contains($quote)) {
+            $this->quotes->removeElement($quote);
             // set the owning side to null (unless already changed)
-            if ($order->getUser() === $this) {
-                $order->setUser(null);
+            if ($quote->getUser() === $this) {
+                $quote->setUser(null);
             }
         }
 

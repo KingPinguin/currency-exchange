@@ -5,15 +5,15 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class OrderController extends AbstractController
+class QuoteController extends AbstractController
 {
     /**
-     * @Route("/order", name="app_order")
+     * @Route("/quote", name="quote")
      */
     public function index()
     {
-        return $this->render('order/index.html.twig', [
-            'controller_name' => 'OrderController',
+        return $this->render('quote/index.html.twig', [
+            'controller_name' => 'QuoteController',
         ]);
     }
 }
