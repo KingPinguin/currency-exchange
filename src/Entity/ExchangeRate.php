@@ -5,8 +5,10 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\ExchangeRateRepository")
  */
 class ExchangeRate
@@ -41,17 +43,17 @@ class ExchangeRate
     private $currencyBuy;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="decimal", precision=10, scale=6)
      */
     private $rate;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $surchargePercentage;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $discountPercentage;
 
@@ -123,36 +125,36 @@ class ExchangeRate
         return $this;
     }
 
-    public function getRate(): ?int
+    public function getRate()
     {
         return $this->rate;
     }
 
-    public function setRate(?int $rate): self
+    public function setRate($rate): self
     {
         $this->rate = $rate;
 
         return $this;
     }
 
-    public function getSurchargePercentage(): ?int
+    public function getSurchargePercentage()
     {
         return $this->surchargePercentage;
     }
 
-    public function setSurchargePercentage(?int $surchargePercentage): self
+    public function setSurchargePercentage($surchargePercentage): self
     {
         $this->surchargePercentage = $surchargePercentage;
 
         return $this;
     }
 
-    public function getDiscountPercentage(): ?int
+    public function getDiscountPercentage()
     {
         return $this->discountPercentage;
     }
 
-    public function setDiscountPercentage(?int $discountPercentage): self
+    public function setDiscountPercentage($discountPercentage): self
     {
         $this->discountPercentage = $discountPercentage;
 

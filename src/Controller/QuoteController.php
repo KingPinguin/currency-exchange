@@ -8,10 +8,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuoteController extends AbstractController
 {
     /**
-     * @Route("/quote", name="quote")
+     * @Route("/quote", name="app_quote")
      */
     public function index()
     {
+        
         return $this->render('quote/index.html.twig', [
             'controller_name' => 'QuoteController',
         ]);

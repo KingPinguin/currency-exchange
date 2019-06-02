@@ -3,8 +3,10 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\QuoteRepository")
  */
 class Quote
@@ -35,7 +37,7 @@ class Quote
     private $currencyPurchased;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="decimal", precision=10, scale=4)
      */
     private $currencyPurchasedAmount;
 
@@ -46,27 +48,27 @@ class Quote
     private $currencyPaid;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="decimal", precision=10, scale=4)
      */
     private $currencyPaidAmount;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=4, nullable=true)
      */
     private $surchargeAmount;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $surchargePercentage;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=4, nullable=true)
      */
     private $discountAmount;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $discountPercentage;
 
@@ -86,7 +88,7 @@ class Quote
     private $code;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="decimal", precision=10, scale=6)
      */
     private $rate;
 
@@ -136,12 +138,12 @@ class Quote
         return $this;
     }
 
-    public function getCurrencyPurchasedAmount(): ?int
+    public function getCurrencyPurchasedAmount()
     {
         return $this->currencyPurchasedAmount;
     }
 
-    public function setCurrencyPurchasedAmount(int $currencyPurchasedAmount): self
+    public function setCurrencyPurchasedAmount($currencyPurchasedAmount): self
     {
         $this->currencyPurchasedAmount = $currencyPurchasedAmount;
 
@@ -160,60 +162,60 @@ class Quote
         return $this;
     }
 
-    public function getCurrencyPaidAmount(): ?int
+    public function getCurrencyPaidAmount()
     {
         return $this->currencyPaidAmount;
     }
 
-    public function setCurrencyPaidAmount(int $currencyPaidAmount): self
+    public function setCurrencyPaidAmount($currencyPaidAmount): self
     {
         $this->currencyPaidAmount = $currencyPaidAmount;
 
         return $this;
     }
 
-    public function getSurchargeAmount(): ?int
+    public function getSurchargeAmount()
     {
         return $this->surchargeAmount;
     }
 
-    public function setSurchargeAmount(?int $surchargeAmount): self
+    public function setSurchargeAmount($surchargeAmount): self
     {
         $this->surchargeAmount = $surchargeAmount;
 
         return $this;
     }
 
-    public function getSurchargePercentage(): ?int
+    public function getSurchargePercentage()
     {
         return $this->surchargePercentage;
     }
 
-    public function setSurchargePercentage(?int $surchargePercentage): self
+    public function setSurchargePercentage($surchargePercentage): self
     {
         $this->surchargePercentage = $surchargePercentage;
 
         return $this;
     }
 
-    public function getDiscountAmount(): ?int
+    public function getDiscountAmount()
     {
         return $this->discountAmount;
     }
 
-    public function setDiscountAmount(?int $discountAmount): self
+    public function setDiscountAmount($discountAmount): self
     {
         $this->discountAmount = $discountAmount;
 
         return $this;
     }
 
-    public function getDiscountPercentage(): ?int
+    public function getDiscountPercentage()
     {
         return $this->discountPercentage;
     }
 
-    public function setDiscountPercentage(?int $discountPercentage): self
+    public function setDiscountPercentage($discountPercentage): self
     {
         $this->discountPercentage = $discountPercentage;
 
@@ -256,12 +258,12 @@ class Quote
         return $this;
     }
 
-    public function getRate(): ?int
+    public function getRate()
     {
         return $this->rate;
     }
 
-    public function setRate(int $rate): self
+    public function setRate($rate): self
     {
         $this->rate = $rate;
 
