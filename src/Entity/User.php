@@ -16,6 +16,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 class User implements UserInterface
 {
     /**
+     * @var integer
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -23,6 +24,7 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank
      * @Assert\Email(
@@ -33,11 +35,13 @@ class User implements UserInterface
     private $email;
 
     /**
+     * @var array
      * @ORM\Column(type="json")
      */
     private $roles = [];
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(
      *      min = 6,
@@ -49,16 +53,19 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=180, nullable=true)
      */
     private $token;
 
     /**
+     * @var string
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $resetRequest;
 
     /**
+     * @var string
      * @ORM\OneToMany(targetEntity="App\Entity\Quote", mappedBy="user")
      */
     private $quotes;

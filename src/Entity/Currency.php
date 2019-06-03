@@ -14,6 +14,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 class Currency
 {
     /**
+     * @var integer
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -21,31 +22,37 @@ class Currency
     private $id;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=3)
      */
     private $code;
 
     /**
+     * @var string
      * @ORM\OneToMany(targetEntity="App\Entity\ExchangeRate", mappedBy="currencySell", orphanRemoval=true)
      */
     private $sellExchangeRates;
 
     /**
+     * @var string
      * @ORM\OneToMany(targetEntity="App\Entity\ExchangeRate", mappedBy="currencyBuy", orphanRemoval=true)
      */
     private $buyExchangeRates;
 
     /**
+     * @var string
      * @ORM\OneToMany(targetEntity="App\Entity\Quote", mappedBy="currencyPurchased")
      */
     private $currencyPurchased;
 
     /**
+     * @var string
      * @ORM\OneToMany(targetEntity="App\Entity\Quote", mappedBy="currencyPaid")
      */
     private $currencyPaid;

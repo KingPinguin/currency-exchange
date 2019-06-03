@@ -10,14 +10,18 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class SecurityController extends AbstractController
 {
     /**
      * @Route("/", name="app_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, AuthorizationCheckerInterface $authChecker): Response
     {
+        if(true === $authChecker->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('app_quote');
+        }
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user

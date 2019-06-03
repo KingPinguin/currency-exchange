@@ -14,6 +14,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 class ExchangeRate
 {
     /**
+     * @var integer
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -21,48 +22,57 @@ class ExchangeRate
     private $id;
 
     /**
+     * @var string
      * @ORM\Column(type="datetime")
      */
     private $timestamp;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=6)
      */
     private $code;
 
     /**
+     * @var string
      * @ORM\ManyToOne(targetEntity="App\Entity\Currency", inversedBy="sellExchangeRates")
      * @ORM\JoinColumn(nullable=false)
      */
     private $currencySell;
 
     /**
+     * @var string
      * @ORM\ManyToOne(targetEntity="App\Entity\Currency", inversedBy="buyExchangeRates")
      * @ORM\JoinColumn(nullable=false)
      */
     private $currencyBuy;
 
     /**
+     * @var string
      * @ORM\Column(type="decimal", precision=10, scale=6)
      */
     private $rate;
 
     /**
+     * @var string
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $surchargePercentage;
 
     /**
+     * @var string
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $discountPercentage;
 
     /**
+     * @var string
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $available;
 
     /**
+     * @var string
      * @ORM\OneToMany(targetEntity="App\Entity\Quote", mappedBy="exchangeRate")
      */
     private $quotes;
