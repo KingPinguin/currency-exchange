@@ -1,3 +1,9 @@
 var $ = require('jquery');
-require('bootstrap');
-require('../css/order.scss');
+
+$( "#get_quote" ).submit(function( event ) {
+    $.post($(this).attr('action'), $(this).serialize(), function(json) {
+        alert(json);
+      }, 'json');
+
+      return false;
+  });

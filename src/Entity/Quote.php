@@ -12,7 +12,6 @@ use ApiPlatform\Core\Annotation\ApiResource;
 class Quote
 {
     /**
-     * @var integer
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -20,89 +19,75 @@ class Quote
     private $id;
 
     /**
-     * @var string
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="quotes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @var string
      * @ORM\ManyToOne(targetEntity="App\Entity\ExchangeRate", inversedBy="quotes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $exchangeRate;
 
     /**
-     * @var string
      * @ORM\ManyToOne(targetEntity="App\Entity\Currency", inversedBy="currencyPurchased")
      * @ORM\JoinColumn(nullable=false)
      */
     private $currencyPurchased;
 
     /**
-     * @var string
      * @ORM\Column(type="decimal", precision=10, scale=4)
      */
     private $currencyPurchasedAmount;
 
     /**
-     * @var string
      * @ORM\ManyToOne(targetEntity="App\Entity\Currency", inversedBy="currencyPaid")
      * @ORM\JoinColumn(nullable=false)
      */
     private $currencyPaid;
 
     /**
-     * @var string
      * @ORM\Column(type="decimal", precision=10, scale=4)
      */
     private $currencyPaidAmount;
 
     /**
-     * @var string
      * @ORM\Column(type="decimal", precision=10, scale=4, nullable=true)
      */
     private $surchargeAmount;
 
     /**
-     * @var string
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $surchargePercentage;
 
     /**
-     * @var string
      * @ORM\Column(type="decimal", precision=10, scale=4, nullable=true)
      */
     private $discountAmount;
 
     /**
-     * @var string
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $discountPercentage;
 
     /**
-     * @var string
      * @ORM\Column(type="datetime")
      */
     private $created;
 
     /**
-     * @var string
      * @ORM\Column(type="guid", unique=true)
      */
     private $uuid;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=6)
      */
     private $code;
 
     /**
-     * @var string
      * @ORM\Column(type="decimal", precision=10, scale=6)
      */
     private $rate;

@@ -6,53 +6,62 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     itemOperations={
+ *      "get"={
+ *          "force_eager"=false,
+ *          "normalization_context"={"groups"={"read"},"enable_max_depth"=true}
+ *       }
+ *     },
+ *     collectionOperations={
+ *       "get"={
+ *          "normalization_context"={"groups"={"read"}},
+ *       }
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\CurrencyRepository")
  */
 class Currency
 {
     /**
-     * @var integer
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read"})
      */
     private $id;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read"})
      */
     private $name;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=3)
+     * @Groups({"read"})
      */
     private $code;
 
     /**
-     * @var string
      * @ORM\OneToMany(targetEntity="App\Entity\ExchangeRate", mappedBy="currencySell", orphanRemoval=true)
      */
     private $sellExchangeRates;
 
     /**
-     * @var string
      * @ORM\OneToMany(targetEntity="App\Entity\ExchangeRate", mappedBy="currencyBuy", orphanRemoval=true)
      */
     private $buyExchangeRates;
 
     /**
-     * @var string
      * @ORM\OneToMany(targetEntity="App\Entity\Quote", mappedBy="currencyPurchased")
      */
     private $currencyPurchased;
 
     /**
-     * @var string
      * @ORM\OneToMany(targetEntity="App\Entity\Quote", mappedBy="currencyPaid")
      */
     private $currencyPaid;

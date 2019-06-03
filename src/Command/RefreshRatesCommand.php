@@ -97,17 +97,17 @@ class RefreshRatesCommand extends Command
             // Check if exchange rate already exists in database
             $existingExchangeRate = $this->manager->getRepository('App:ExchangeRate')->findOneByCode($code);
             if($existingExchangeRate) {
-                $this->setExchangeRates($existingExchangeRate, $code, $rate);
+                $this->setExistingExchangeRates($existingExchangeRate, $code, $rate);
             } else {
                 $newExchangeRate = new ExchangeRate();
 
-                $this->setExchangeRates($newExchangeRate, $code, $rate);
+                $this->setNewExchangeRates($newExchangeRate, $code, $rate);
             }
         }
         $this->manager->flush();
     }
 
-    private function setExchangeRates($exchangeRate, $code, $rate) {
+    private function setExistingExchangeRates($exchangeRate, $code, $rate) {
         $surchargeForUSDJPY = 7.5;
         $surchargeForUSDGBP = 5;
         $surchargeForUSDEUR = 5;
@@ -132,6 +132,43 @@ class RefreshRatesCommand extends Command
         } elseif($code == 'USDEUR') {
             $exchangeRate->setSurchargePercentage($surchargeForUSDEUR);
             $exchangeRate->setDiscountPercentage($discountForUSDEUR);
+        }
+
+        $this->manager->persist($exchangeRate);
+    }
+
+    private function setNewExchangeRates($exchangeRate, $code, $rate) {
+        $surchargeForUSDJPY = 7.5;
+        $surchargeForUSDGBP = 5;
+        $surchargeForUSDEUR = 5;
+        $discountForUSDEUR = 2;
+
+        $currencySellCode = substr($code, 0, 3);
+        $currencyBuyCode = substr($code, -3);
+
+        $currencySell = $this->manager->getRepository('App:Currency')->findOneByCode($currencySellCode);
+        $currencyBuy = $this->manager->getRepository('App:Currency')->findOneByCode($currencyBuyCode);
+
+        $exchangeRate->setCurrencySell($currencySell);
+        $exchangeRate->setCurrencyBuy($currencyBuy);
+        $exchangeRate->setTimestamp(new \DateTime());
+        $exchangeRate->setCode($code);
+        $exchangeRate->setAvailable(true);
+        if($code == 'USDJPY') {
+            $exchangeRate->setSurchargePercentage($surchargeForUSDJPY);
+            // Set static rates when rates are inserted for the first time
+            $exchangeRate->setRate(107.17);
+        } elseif($code == 'USDGBP') {
+            $exchangeRate->setSurchargePercentage($surchargeForUSDGBP);
+            // Set static rates when rates are inserted for the first time
+            $exchangeRate->setRate(0.711178);
+        } elseif($code == 'USDEUR') {
+            $exchangeRate->setSurchargePercentage($surchargeForUSDEUR);
+            $exchangeRate->setDiscountPercentage($discountForUSDEUR);
+            // Set static rates when rates are inserted for the first time
+            $exchangeRate->setRate(0.884872);
+        } else {
+            $exchangeRate->setRate($rate);
         }
 
         $this->manager->persist($exchangeRate);

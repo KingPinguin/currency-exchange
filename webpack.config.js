@@ -6,7 +6,7 @@ Encore
     // public path used by the web server to access the output path
     .setPublicPath('/build')
     .addEntry('components/order', './assets/js/order.js')
-    .addStyleEntry('css/security', './assets/css/security.scss')
+    .addStyleEntry('css/layout', './assets/css/layout.scss')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
