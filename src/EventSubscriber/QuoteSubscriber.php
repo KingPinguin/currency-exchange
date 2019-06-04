@@ -1,5 +1,4 @@
 <?php
-// api/src/EventSubscriber/BookMailSubscriber.php
 
 namespace App\EventSubscriber;
 
@@ -34,7 +33,6 @@ final class QuoteSubscriber implements EventSubscriberInterface
         if (!$quote instanceof Quote || Request::METHOD_POST !== $method) {
             return;
         }
-        // console.log($content['code']);
         if($content['code'] == 'USDGBP') {
             $message = (new \Swift_Message('A new quote has been added'))
                 ->setFrom('system@example.com')
