@@ -8,9 +8,18 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     itemOperations={
+ *      "get"={
+ *          "force_eager"=false,
+ *          "normalization_context"={"groups"={"read"},"enable_max_depth"=true}
+ *       }
+ *     },
+ *     collectionOperations={}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface
@@ -24,6 +33,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"read"})
      * @Assert\NotBlank
      * @Assert\Email(
      *     message = "The email '{{ value }}' is not a valid email.",

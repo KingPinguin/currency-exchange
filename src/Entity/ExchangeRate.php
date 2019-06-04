@@ -36,11 +36,13 @@ class ExchangeRate
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"read"})
      */
     private $timestamp;
 
     /**
      * @ORM\Column(type="string", length=6)
+     * @Groups({"read"})
      */
     private $code;
 
@@ -59,21 +61,25 @@ class ExchangeRate
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=6)
+     * @Groups({"read"})
      */
     private $rate;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"read"})
      */
     private $surchargePercentage;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"read"})
      */
     private $discountPercentage;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"read"})
      */
     private $available;
 

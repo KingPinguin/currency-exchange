@@ -36,11 +36,52 @@ class QuoteController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
-            return new JsonResponse($form->get('amount')->getData());
+
+            return new JsonResponse($this->calculateResults($form));
         }
 
         return $this->render('quote/index.html.twig', [
             'form'  =>  $form->createView(),
         ]);
+    }
+
+    private function calculateResults($form) {
+        $purchasedAmount = $form->get('amount')->getData();
+        $exchangeRateId = $form->get('currency')->getData();
+        $entityManager = $this->getDoctrine()->getManager();
+        $exchangeRate = $entityManager->getRepository('App:ExchangeRate')->find($exchangeRateId);
+        return $result = [
+            'user' => '/api/users/'.$this->getUser()->getId(),
+            'exchangeRate'=> '/api/exchange_rates/'.$exchangeRateId.'',
+            'currencyPurchased' => '/api/currencies/'.$exchangeRate->getCurrencyBuy()->getId().'',
+            'currencyPurchasedAmount' => ''.$purchasedAmount.'',
+            'currencyPaid' => '/api/currencies/'.$exchangeRate->getCurrencySell()->getId().'',
+            'currencyPaidAmount' => ''.$this->paidAmount($purchasedAmount, $this->discountAmount($purchasedAmount, $exchangeRate->getDiscountPercentage(), $this->surchargeAmount($purchasedAmount, $exchangeRate->getSurchargePercentage())), $this->surchargeAmount($purchasedAmount, $exchangeRate->getSurchargePercentage()), $exchangeRate->getRate()).'',
+            'surchargeAmount' => ''.$this->surchargeAmount($purchasedAmount, $exchangeRate->getSurchargePercentage()).'',
+            'surchargePercentage' => ''.$exchangeRate->getSurchargePercentage().'',
+            'discountAmount' => ''.$this->discountAmount($purchasedAmount, $exchangeRate->getDiscountPercentage(), $this->surchargeAmount($purchasedAmount, $exchangeRate->getSurchargePercentage())).'',
+            'discountPercentage' => ''.$exchangeRate->getDiscountPercentage().'',
+            'code' => ''.$exchangeRate->getCode().'',
+            'rate' => ''.$exchangeRate->getRate().''
+        ];
+    }
+
+    private function surchargeAmount($purchasedAmount, $surchargePercentage) {
+        return $surchargeAmount = ($surchargePercentage / 100) * $purchasedAmount;
+    }
+
+    private function discountAmount($purchasedAmount, $discountPercentage, $surchargeAmount) {
+        if(!IS_NULL($discountPercentage)) {
+
+            return $discountAmount = ($discountPercentage / 100) * ($purchasedAmount + $surchargeAmount);
+        } else {
+
+            return 0;
+        }
+    }
+
+    private function paidAmount($purchasedAmount, $discountAmount, $surchargeAmount, $rate) {
+
+        return $paidAmount = ($purchasedAmount - $discountAmount + $surchargeAmount) / $rate;
     }
 }
