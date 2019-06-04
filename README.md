@@ -4,6 +4,7 @@
 To run this project localy, use the commands bellow in that order:
 
 ```
+$ git clone https://github.com/KingPinguin/currency-exchange.git
 $ cd currency-exchange
 $ composer install
 $ yarn install
